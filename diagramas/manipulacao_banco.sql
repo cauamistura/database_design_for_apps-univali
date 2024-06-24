@@ -53,7 +53,6 @@ JOIN `locadoradb`.`modelos` AS modelo;
 -- Drop do procedimento armazenado se existir
 DROP PROCEDURE IF EXISTS AdicionarCarroCompleto;
 
--- Delimitador necessário para alterar o padrão do delimitador do MySQL
 DELIMITER //
 
 -- Criação do procedimento armazenado
@@ -73,13 +72,15 @@ BEGIN
     INSERT INTO `locadoradb`.`marcas` (`descricao`)
     VALUES (p_descricao_marca);
 
-    SET v_codigo_marca = LAST_INSERT_ID(); -- Capturar o último ID inserido na tabela marcas
+    -- Capturar o último ID inserido na tabela marcas
+    SET v_codigo_marca = LAST_INSERT_ID(); 
 
     -- Inserir na tabela modelos
     INSERT INTO `locadoradb`.`modelos` (`codigo_marca`, `descricao`)
     VALUES (v_codigo_marca, p_descricao_modelo);
 
-    SET v_codigo_modelo = LAST_INSERT_ID(); -- Capturar o último ID inserido na tabela modelos
+    -- Capturar o último ID inserido na tabela modelos
+    SET v_codigo_modelo = LAST_INSERT_ID(); 
 
     -- Inserir na tabela carros
     INSERT INTO `locadoradb`.`carros` (`ano`, `cor`, `descricao`, `observacao`, `codigo_modelo`)
@@ -88,7 +89,6 @@ BEGIN
     SELECT 'Carro adicionado com sucesso!' AS mensagem;
 END//
 
--- Restaurar o delimitador para ;
 DELIMITER ;
 
 -- Chamar o procedimento armazenado
